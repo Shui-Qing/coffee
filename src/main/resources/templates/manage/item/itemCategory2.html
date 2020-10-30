@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title>管理员后台</title>
+		    <link rel="stylesheet" href="../css/pintuer.css">
+		    <link rel="stylesheet" href="../css/admin.css">
+		    <script src="../js/jquery.js"></script>
+		    <script src="../js/pintuer.js"></script>
+	</head>
+
+	<body>
+		<div class="panel admin-panel">
+		    <div class="padding border-bottom">
+		        <ul class="search" style="padding-left: 10px;">
+		            <li>
+		                <a class="button border-main icon-plus-square-o" th:href="'/itemCategory/add2?pid='+${itemCategory1.pid}">新增二级类目</a>
+		            </li>
+		        </ul>
+		    </div>
+		    <table class="table table-hover text-center">
+		        <tr>
+		            <th>ID</th>
+		            <th>类别名称</th>
+		            <th>操作</th>
+		        </tr>
+		        <tr th:each="data2 : ${itemCategorys}">
+		            <td th:text="${data2.id}"></td>
+		            <td th:text="${data2.name}"></td>
+		            <td>
+		                <div class="button-group">
+		                    <a class="button border-main" th:href="'/itemCategory/update2?id='+${data2.id}"><span class="icon-edit">修改</span> </a>
+		                    <a class="button border-red" th:href="'/itemCategory/delete2?id='+${data2.id}+'&pid='+${data2.pid}"><span class="icon-trash-o">删除</span> </a>
+		                </div>
+		            </td>
+		        </tr>
+
+<!--				<tr>-->
+<!--		            <td colspan="8">-->
+<!--		                <div class="pagelist">-->
+<!--		                    &lt;!&ndash;分页开始&ndash;&gt;-->
+<!--		                    &lt;!&ndash; <pg:pager url="${ctx}/itemCategory/findBySql2" maxIndexPages="5" items="${pagers.total}" maxPageItems="15" export="curPage=pageNumber"> &ndash;&gt;-->
+<!--		                        &lt;!&ndash; <pg:last> &ndash;&gt;-->
+<!--		                            共${pagers.total}记录，共${pageNumber}页，-->
+<!--		                        &lt;!&ndash; </pg:last> &ndash;&gt;-->
+<!--		                        当前第${curPage}页-->
+<!--		                        &lt;!&ndash; <pg:first> &ndash;&gt;-->
+<!--		                            <a href="${pageUrl}">首页</a>-->
+<!--		                        &lt;!&ndash; </pg:first> &ndash;&gt;-->
+<!--		                        &lt;!&ndash; <pg:prev> &ndash;&gt;-->
+<!--		                            <a href="${pageUrl}">上一页</a>-->
+<!--		                        &lt;!&ndash; </pg:prev> &ndash;&gt;-->
+<!--		                        &lt;!&ndash; <pg:pages> &ndash;&gt;-->
+<!--		                            &lt;!&ndash; <c:choose> &ndash;&gt;-->
+<!--		                                &lt;!&ndash; <c:when test="${curPage eq pageNumber}"> &ndash;&gt;-->
+<!--		                                    <font color="red">[${pageNumber}]</font>-->
+<!--		                                &lt;!&ndash; </c:when> &ndash;&gt;-->
+<!--		                                &lt;!&ndash; <c:otherwise> &ndash;&gt;-->
+<!--		                                    <a href="${pageUrl}">${pageNumber}</a>-->
+<!--		                                &lt;!&ndash; </c:otherwise> &ndash;&gt;-->
+<!--		                            &lt;!&ndash; </c:choose> &ndash;&gt;-->
+<!--		                        &lt;!&ndash; </pg:pages>-->
+<!--		                        <pg:next> &ndash;&gt;-->
+<!--		                            <a href="${pageUrl}">下一页</a>-->
+<!--		                        &lt;!&ndash; </pg:next>-->
+<!--		                        <pg:last>-->
+<!--		                            <c:choose>-->
+<!--		                                <c:when test="${curPage eq pageNumber}"> &ndash;&gt;-->
+<!--		                                    <font color="red">尾页</font>-->
+<!--		                                &lt;!&ndash; </c:when>-->
+<!--		                                <c:otherwise> &ndash;&gt;-->
+<!--		                                    <a href="${pageUrl}">尾页</a>-->
+<!--		                                &lt;!&ndash; </c:otherwise>-->
+<!--		                            </c:choose>-->
+<!--		                        </pg:last>-->
+<!--		                    </pg:pager> &ndash;&gt;-->
+<!--		                </div>-->
+<!--		            </td>-->
+<!--		        </tr>-->
+		    </table>
+		</div>
+	</body>
+</html>

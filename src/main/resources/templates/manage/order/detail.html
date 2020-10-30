@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title>管理员后台</title>
+		    <link rel="stylesheet" href="../css/pintuer.css">
+		    <link rel="stylesheet" href="../css/admin.css">
+		    <script src="../js/jquery.js"></script>
+		    <script src="../js/pintuer.js"></script>
+	</head>
+	<body>
+		<div class="panel admin-panel">
+		    <table class="table table-hover text-center">
+		        <tr>
+		            <th>商品名称</th>
+		            <th>商品主图</th>
+		            <th>商品单价</th>
+		            <th>购买数量</th>
+		            <th>小计</th>
+		            <th>状态</th>
+		        </tr>
+		        <tr th:each="data : ${orderDetails}">
+		            <td th:text="${data.item.name}"></td>
+		            <td><img th:src="${data.item.url1}" alt="" style="width: 100px;height: 100px;"></td>
+		            <td th:text="${data.item.price}"></td>
+		            <td th:text="${data.num}"></td>
+		            <td th:text="${data.total}"></td>
+		            <td >
+						<a th:if="${data.status == 0}" style="color: red">未退货</a>
+						<a th:if="${data.status == 1}" style="color: red">已退货</a>
+		            </td>
+		        </tr>
+<!--		        <tr>-->
+<!--		            <td colspan="8">-->
+<!--		                <div class="pagelist">-->
+<!--		                    &lt;!&ndash;分页开始&ndash;&gt;-->
+<!--		                    <pg:pager url="${ctx}/orderDetail/ulist?orderId=${obj.orderId}" maxIndexPages="5" items="${pagers.total}" maxPageItems="15" export="curPage=pageNumber">-->
+<!--		                        <pg:last>-->
+<!--		                            共${pagers.total}记录，共${pageNumber}页，-->
+<!--		                        </pg:last>-->
+<!--		                        当前第${curPage}页-->
+<!--		                        <pg:first>-->
+<!--		                            <a href="${pageUrl}">首页</a>-->
+<!--		                        </pg:first>-->
+<!--		                        <pg:prev>-->
+<!--		                            <a href="${pageUrl}">上一页</a>-->
+<!--		                        </pg:prev>-->
+<!--		                        <pg:pages>-->
+<!--		                            <c:choose>-->
+<!--		                                <c:when test="${curPage eq pageNumber}">-->
+<!--		                                    <font color="red">[${pageNumber}]</font>-->
+<!--		                                </c:when>-->
+<!--		                                <c:otherwise>-->
+<!--		                                    <a href="${pageUrl}">${pageNumber}</a>-->
+<!--		                                </c:otherwise>-->
+<!--		                            </c:choose>-->
+<!--		                        </pg:pages>-->
+<!--		                        <pg:next>-->
+<!--		                            <a href="${pageUrl}">下一页</a>-->
+<!--		                        </pg:next>-->
+<!--		                        <pg:last>-->
+<!--		                            <c:choose>-->
+<!--		                                <c:when test="${curPage eq pageNumber}">-->
+<!--		                                    <font color="red">尾页</font>-->
+<!--		                                </c:when>-->
+<!--		                                <c:otherwise>-->
+<!--		                                    <a href="${pageUrl}">尾页</a>-->
+<!--		                                </c:otherwise>-->
+<!--		                            </c:choose>-->
+<!--		                        </pg:last>-->
+<!--		                    </pg:pager>-->
+<!--		                </div>-->
+<!--		            </td>-->
+<!--		        </tr>-->
+		    </table>
+		</div>
+	</body>
+</html>

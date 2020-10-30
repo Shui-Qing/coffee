@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>管理员后台</title>
+    <link rel="stylesheet" href="/css/pintuer.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="/js/jquery.js"></script>
+    <script src="js/pintuer.js"></script>
+</head>
+
+<body>
+<div class="panel admin-panel">
+    <form action="/user/findUserByName" id="listform" method="post">
+        <div class="padding border-bottom">
+            <ul class="search" style="padding-left: 10px;">
+                <li>
+                    <input type="text" placeholder="请输入用户名" id="userName" name="userName" class="input"
+                           style="width: 250px;line-height: 17px;display: inline-block"/>
+
+                    <a href="javascript:void(0)" onclick="changeSearch()" class="button border-main icon-search">搜索</a>
+                </li>
+            </ul>
+        </div>
+    </form>
+    <table class="table table-hover text-center">
+        <tr>
+            <th>用户名</th>
+            <th>手机号</th>
+            <th>真实姓名</th>
+            <th>性别</th>
+            <th>邮箱</th>
+            <th>地址</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.phone}"></td>
+            <td th:text="${user.realName}"></td>
+            <td th:text="${user.sex}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.address}"></td>
+        </tr>
+    </table>
+</div>
+<!--        <th:each th:items="${pagers.datas}" th:var="data" varStatus="l">-->
+<!--            <tr>-->
+<!--                          </tr>-->
+<!--        </th:each>-->
+<!--        <tr>-->
+<!--            <td colspan="8">-->
+<!--                <div class="pagelist">-->
+<!--                    &lt;!&ndash;分页开始&ndash;&gt;-->
+<!--                    <pg:pager url="/user/findAll" maxIndexPages="5" items="${pagers.total}" maxPageItems="15"-->
+<!--                              export="curPage=pageNumber">-->
+<!--                        <pg:last>-->
+<!--                            共${pagers.total}记录，共${pageNumber}页，-->
+<!--                        </pg:last>-->
+<!--                        当前第${curPage}页-->
+<!--                        <pg:first>-->
+<!--                            <a href="${pageUrl}">首页</a>-->
+<!--                        </pg:first>-->
+<!--                        <pg:prev>-->
+<!--                            <a href="${pageUrl}">上一页</a>-->
+<!--                        </pg:prev>-->
+<!--                        <pg:pages>-->
+<!--                            <th:choose>-->
+<!--                                <th:when test="${curPage eq pageNumber}">-->
+<!--                                    <font color="red">[${pageNumber}]</font>-->
+<!--                                </th:when>-->
+<!--                                <th:otherwise>-->
+<!--                                    <a href="${pageUrl}">${pageNumber}</a>-->
+<!--                                </th:otherwise>-->
+<!--                            </th:choose>-->
+<!--                        </pg:pages>-->
+<!--                        <pg:next>-->
+<!--                            <a href="${pageUrl}">下一页</a>-->
+<!--                        </pg:next>-->
+<!--                        <pg:last>-->
+<!--                            <th:choose>-->
+<!--                                <th:when test="${curPage eq pageNumber}">-->
+<!--                                    <font color="red">尾页</font>-->
+<!--                                </th:when>-->
+<!--                                <th:otherwise>-->
+<!--                                    <a href="${pageUrl}">尾页</a>-->
+<!--                                </th:otherwise>-->
+<!--                            </th:choose>-->
+<!--                        </pg:last>-->
+<!--                    </pg:pager>-->
+<!--                </div>-->
+<!--            </td>-->
+<!--        </tr>-->
+<script>
+    function changeSearch() {
+        $("#listform").submit();
+    }
+
+    // $("#listform").click(function () {
+    //     $.ajax({
+    //         url: "/user/findUserByName",
+    //         type: "POST",
+    //         data: $(".table table-hover text-center").serialize(),
+    //         success: function (data) {
+    //             alert(data.userName);
+    //         }
+    //     });
+    // });
+</script>
+</body>
+
+</html>

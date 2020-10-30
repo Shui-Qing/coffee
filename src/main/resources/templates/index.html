@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="utf-8"/>
+    <title>连锁咖啡</title>
+    <link rel="stylesheet" type="text/css" href="css/public.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="css/indexs.css"/>
+    <link rel="stylesheet" type="text/css" href="css/proList.css"/>
+    <script src="js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<!------------------------------header开始------------------------------>
+<div class="container-fluid" id="header">
+    <!-- header重复内容开始 -->
+    <div class="top_bg">
+        <div class="top">
+            <div class="logo"><img src="img/temp/logo.png" style="width: 150px;"></div>
+            <div class="top_right" th:if="${userLogin} == null">
+                <a href="#"><img src="img/qq.png"></a>
+                <a href="#"><img src="img/wechat.png" class="weixin"></a>
+                <a href="/uLogin" class="Lrs">登录</a>
+                <a href="/reg" class="Lrs">注册</a>
+            </div>
+            <div class="top_right" th:if="${userLogin} != null">
+                <a class="Lrs" style="color: white" th:if="${userLogin.realName} == null" th:text="'欢迎~'+${userLogin.email}">如果真实姓名为空：邮箱</a>
+                <a class="Lrs" style="color: white" th:if="${userLogin.realName} != null" th:text="'欢迎~'+${userLogin.realName}">如果真行姓名不为空：真实姓名</a>
+            </div>
+        </div>
+    </div>
+    <!-- header重复内容结束 -->
+    <!-----------------banner------------------------------->
+    <div class="block_home_slider">
+        <div id="home_slider" class="flexslider">
+            <ul class="slides">
+                <li>
+                    <div class="slide"><img src="img/banner1.jpg"/></div>
+                </li>
+                <li>
+                    <div class="slide"><img src="img/banner2.jpg"/></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 搜索框 -->
+    <form action="/search" method="post">
+        <div class="search">
+            <input class="search-input" name="name" placeholder="搜索你想要的咖啡:"/>
+            <input type="submit" class="search-btn" value="搜索"/>
+        </div>
+    </form>
+
+    <!-----------------paintCon------------------------------->
+    <div class="paintCon">
+        <section class="wrapper">
+            <h3>
+                <img src="img/temp/perfumeTit01.jpg">
+            </h3>
+            <div class="paintList">
+                <a th:href="'/proDetail?id='+${item.id}" th:each="item : ${items}">
+                    <dl>
+                        <dt><img th:src="${item.url1}" style="height: 374px;width: 374px"></dt>
+                        <dd th:text="${item.yiji.name}+'——'+${item.name}"></dd>
+                        <dd th:text="'￥'+${item.price}"></dd>
+                    </dl>
+                </a>
+            </div>
+        </section>
+    </div>
+
+
+    <!--返回顶部-->
+    <div class="gotop"><a href="my/cart.html">
+        <dl>
+            <dt><img src="img/gt1.png"/></dt>
+            <dd>去购<br/>物车</dd>
+        </dl>
+    </a><a href="#" class="dh">
+        <dl>
+            <dt><img src="img/gt2.png"/></dt>
+            <dd>联系<br/>客服</dd>
+        </dl>
+    </a><a href="my/mygxin.html">
+        <dl>
+            <dt><img src="img/gt3.png"/></dt>
+            <dd>个人<br/>中心</dd>
+        </dl>
+    </a><a href="#" class="toptop" style="display: none;">
+        <dl>
+            <dt><img src="img/gt4.png"/></dt>
+            <dd>返回<br/>顶部</dd>
+        </dl>
+    </a>
+        <p>400-800-8200</p>
+    </div>
+    <div class="msk"></div>
+    <!--footer-->
+    <div class="footer">
+        <div class="top" style="height: 100px;">
+            <div class="wrapper" style="margin-bottom: 145px;">
+                <div class="clearfix"><a href="#2" class="fl"><img src="img/foot1.png"/></a><span
+                        class="fl">7天无理由退货</span>
+                </div>
+                <div class="clearfix"><a href="#2" class="fl"><img src="img/foot2.png"/></a><span
+                        class="fl">15天免费换货</span>
+                </div>
+                <div class="clearfix"><a href="#2" class="fl"><img src="img/foot3.png"/></a><span
+                        class="fl">满599包邮</span>
+                </div>
+                <div class="clearfix"><a href="#2" class="fl"><img src="img/foot4.png"/></a><span
+                        class="fl">手机特色服务</span>
+                </div>
+            </div>
+        </div>
+        <p class="dibu">最家家居&copy;2013-2017公司版权所有 京ICP备080100-44备0000111000号<br/>
+            违法和不良信息举报电话：188-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</p>
+    </div>
+    <!--footer-->
+    <script src="js/index.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/public.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/nav.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/jquery.flexslider-min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#home_slider').flexslider({
+                animation: 'slide',
+                controlNav: true,
+                directionNav: true,
+                animationLoop: true,
+                slideshow: true,
+                slideshowSpeed: 2000,
+                useCSS: false
+            });
+        });
+
+        var speed = 500; //滑动的速度
+        $(".toptop").click(function () { //返回顶部
+            $('body,html').animate({
+                scrollTop: 0
+            }, speed);
+            return false;
+        });
+    </script>
+</div>
+</body>
+</html>

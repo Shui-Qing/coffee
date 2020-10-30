@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+	<head>
+		<meta charset="utf-8">
+		<title>管理员后台</title>
+		    <link rel="stylesheet" href="../css/pintuer.css">
+		    <link rel="stylesheet" href="../css/admin.css">
+		    <script src="../js/jquery.js"></script>
+		    <script src="../js/pintuer.js"></script>
+	</head>
+	<body>
+		<div class="panel admin-panel">
+		    <form action="/order/findBySql" id="listform" method="post">
+		        <div class="padding border-bottom">
+		            <ul class="search" style="padding-left: 10px;">
+		                <li>
+		                    <input type="text" placeholder="订单号" name="code" class="input"
+		                        style="width: 250px;line-height: 17px;display: inline-block" />
+		                    <a href="javascript:void(0)" onclick="changeSearch()" class="button border-main icon-search">搜索</a>
+		                </li>
+		            </ul>
+		        </div>
+		    </form>
+		    <table class="table table-hover text-center">
+		        <tr>
+		            <th>订单号</th>
+		            <th>下单时间</th>
+		            <th>总金额</th>
+		            <th>下单人</th>
+		            <th>订单状态</th>
+		            <th>操作</th>
+		        </tr>
+		        <tr th:each="data : ${orders}">
+		            <td th:text="${data.code}"></td>
+		            <td th:text="${data.addTime}"></td>
+		            <td th:text="${data.total}"></td>
+		            <td th:text="${data.user.userName}"></td>
+		            <td>
+						<a th:if="${data.status == 0}" style="color: red">待发货</a>
+						<a th:if="${data.status == 1}" style="color: red">已取消</a>
+						<a th:if="${data.status == 2}" style="color: red">待收货</a>
+						<a th:if="${data.status == 3}" style="color: red">已收货</a>
+		            </td>
+		            <td>
+		                <a class="button border-main" th:href="'/orderDetail/ulist?orderId='+${data.id}"><span class="icon-edit">查看订单详情</span> </a>
+						<a th:if="${data.status == 0}" class="button border-red" th:href="'/order/fh?id='+${data.id}"><span class="icon-trash-o">去发货</span> </a>
+		            </td>
+		        </tr>
+<!--		        <tr>-->
+<!--		            <td colspan="8">-->
+<!--		                <div class="pagelist">-->
+<!--		                    &lt;!&ndash;分页开始&ndash;&gt;-->
+<!--		                    <pg:pager url="${ctx}/itemOrder/findBySql" maxIndexPages="5" items="${pagers.total}" maxPageItems="15" export="curPage=pageNumber">-->
+<!--		                        <pg:last>-->
+<!--		                            共${pagers.total}记录，共${pageNumber}页，-->
+<!--		                        </pg:last>-->
+<!--		                        当前第${curPage}页-->
+<!--		                        <pg:first>-->
+<!--		                            <a href="${pageUrl}">首页</a>-->
+<!--		                        </pg:first>-->
+<!--		                        <pg:prev>-->
+<!--		                            <a href="${pageUrl}">上一页</a>-->
+<!--		                        </pg:prev>-->
+<!--		                        <pg:pages>-->
+<!--		                            <c:choose>-->
+<!--		                                <c:when test="${curPage eq pageNumber}">-->
+<!--		                                    <font color="red">[${pageNumber}]</font>-->
+<!--		                                </c:when>-->
+<!--		                                <c:otherwise>-->
+<!--		                                    <a href="${pageUrl}">${pageNumber}</a>-->
+<!--		                                </c:otherwise>-->
+<!--		                            </c:choose>-->
+<!--		                        </pg:pages>-->
+<!--		                        <pg:next>-->
+<!--		                            <a href="${pageUrl}">下一页</a>-->
+<!--		                        </pg:next>-->
+<!--		                        <pg:last>-->
+<!--		                            <c:choose>-->
+<!--		                                <c:when test="${curPage eq pageNumber}">-->
+<!--		                                    <font color="red">尾页</font>-->
+<!--		                                </c:when>-->
+<!--		                                <c:otherwise>-->
+<!--		                                    <a href="${pageUrl}">尾页</a>-->
+<!--		                                </c:otherwise>-->
+<!--		                            </c:choose>-->
+<!--		                        </pg:last>-->
+<!--		                    </pg:pager>-->
+<!--		                </div>-->
+<!--		            </td>-->
+<!--		        </tr>-->
+		    </table>
+		</div>
+		<script>
+		    function changeSearch(){
+		        $("#listform").submit();
+		    }
+		</script>
+	</body>
+</html>

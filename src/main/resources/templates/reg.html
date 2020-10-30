@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="css/public.css"/>
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
+    <script src="js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        //验证用户名
+        function checkuserName() {
+            //获取用户名信息
+            var userName = document.getElementById("userName").value;
+            //创建校验规则
+            var reg = /^[\u4E00-\u9FA5A-Za-z0-9_]{1,15}$/		//正则表达式
+            //获取span对象
+            var span = document.getElementById("userNameSpan");
+            //开始校验
+            if (userName == "" || userName == null) {
+                //输出校验结果
+                span.innerHTML = "*用户名不能为空";
+                span.style.color = "red";
+                return false;
+            } else if (reg.test(userName)) {
+                var url = "usernamecheck?userName=" + encodeURI(userName) + "&" + new Date().getTime();
+                $.get(url, function (data) {
+                    if (data == "false") {
+                        span.innerHTML = "*该用户已存在";
+                        span.style.color = "red";
+                        return false;
+                    } else {
+                        span.innerHTML = "*用户名ok";
+                        span.style.color = "green";
+                        return true;
+                    }
+                });
+            } else {
+                span.innerHTML = "*用户名不符合规则";
+                span.style.color = "red";
+                return false;
+            }
+        }
+
+        function checkField(id,reg){
+            var inp=document.getElementById(id);
+            var va=inp.value;
+            var alt=inp.alt;
+            var span=document.getElementById(id+"Span");
+            if(va==""||va==null){
+                span.innerHTML="*"+alt+"不能为空";
+                span.style.color="red";return false;
+            }else if(reg.test(va)){
+                span.innerHTML="*"+alt+"ok";
+                span.style.color="green";return true;
+            }else{
+                span.innerHTML="*"+alt+"不符合规则";
+                span.style.color="red";return false;
+            }
+        }
+        //校验邮箱
+        function checkmail(){
+            return checkField("email",/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/);
+        }
+        //验证用户密码
+        function checkpassWord(){
+            return checkField("passWord",/^[a-zA-Z]\w{5,17}$/);
+            checkrePassWord();
+        }
+        //校验确认密码
+        function checkrePassWord(){
+            var passWord=document.getElementById("passWord").value;
+            var rePassWord=document.getElementById("rePassWord").value;
+            var span=document.getElementById("rePassWordSpan");
+            if(rePassWord==""||rePassWord==null){
+                //输出校验结果
+                span.innerHTML="*确认密码不能为空";
+                span.style.color="red";return false;
+            }else if(rePassWord==passWord){
+                //输出校验结果
+                span.innerHTML="*密码确认ok";
+                span.style.color="green";return true;
+            }else{
+                //输出校验结果
+                span.innerHTML="*两次密码不一致";
+                span.style.color="red";return false;
+            }
+
+        }
+        //验证码校验
+        function checkCode(){
+            var span=document.getElementById("codeSpan");
+            var code=document.getElementById("code").value;
+            alert(code);
+            if(code==""||code==null){
+                //输出校验结果
+                span.innerHTML="*验证码不能为空";
+                span.style.color="red";
+                return false;
+            }else{
+                var url = "checkusercode?code="+encodeURI(code)+"&"+new Date().getTime();
+                $.get(url,function(code){
+                    span.innerHTML="*仔细填写验证码";
+                    span.style.color="green";
+                    return true;
+                });
+            }
+
+        }
+        //提交验证
+        function checkSub(){
+            checkuserName();
+            checkpassWord();
+            checkrePassWord();
+            checkmail();
+            // checkCode();
+            return checkuserName()&&checkpassWord()&&checkrePassWord()&&checkmail();
+        }
+    </script>
+</head>
+<body><!-------------------reg-------------------------->
+<div class="reg">
+    <form action="/toReg" method="post" onsubmit="return checkSub()">
+        <h1><a><img src="img/temp/logo.png"></a></h1>
+        <p>用户注册</p>
+        <p><input type="text" name="userName" id="userName" value="" placeholder="用户名:1-15非特殊符" onblur="checkuserName()" alt="用户名"><span id="userNameSpan">&nbsp;&nbsp;</span></p>
+        <p><input type="text" name="email" id="email" value="" placeholder="邮箱：" onblur="checkmail()" alt="邮箱"><span id="emailSpan">&nbsp;&nbsp;</span></p>
+        <p><input type="password" name="passWord" id="passWord" value="" placeholder="密码:字母开头6~18非特殊符" onblur="checkpassWord()"alt="密码" style="border: 1px solid #dbdbdb;font-size: 20px;padding-left: 10px;"><span id="passWordSpan">&nbsp;&nbsp;</span></p>
+        <p><input type="password" id="rePassWord" value="" placeholder="请确认密码" onblur="checkrePassWord()" alt="确认密码" style="border: 1px solid #dbdbdb;font-size: 20px;padding-left: 10px;"><span id="rePassWordSpan">&nbsp;&nbsp;</span></p>
+
+<!--        <p ><input class="code" type="text" id="code" name="code" value="" placeholder="验证码:" onblur="checkCode()">-->
+<!--            <img th:src="getCode" alt="看不清，换一张" onclick="change(this)"><span id="codeSpan">&nbsp;&nbsp;</span></p>-->
+        <p><input type="submit" name="" value="注册"></p>
+        <p >完成此注册，即表明您同意了我们的</p>
+        <p ><使用条款和隐私策略></p>
+        <p class="txt"><a href="/uLogin"><span></span>已有账号登录</a></p>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="css/public.css"/>
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
+</head>
+<script type="text/javascript">
+    //验证用户名
+    function checkUname(){
+        //获取用户名信息
+        var uname=document.getElementById("userName").value;
+        //获取span对象
+        var span=document.getElementById("userNameSpan");
+        //开始校验
+        if(uname==""||uname==null){
+            span.innerHTML="*用户名不能为空";
+            span.style.color="red";
+            return false;
+        }else{
+            span.innerHTML="";
+            return true;
+        }
+    }
+    //验证用户密码
+    function checkPwd(){
+        //获取用户名信息
+        var pwd=document.getElementById("passWord").value;
+        //获取span对象
+        var span=document.getElementById("passWordSpan");
+        //开始校验
+        if(pwd==""||pwd==null){
+            span.innerHTML="*密  码不能为空";
+            span.style.color="red";
+            return false;
+        }else{
+            span.innerHTML="";
+            return true;
+        }
+    }
+    function checkSub(){
+        checkUname();
+        checkPwd();
+        return checkUname()&&checkPwd();
+    }
+</script>
+<body><!-------------------login-------------------------->
+<div class="login">
+    <form action="/Index" method="post" onsubmit="return checkSub()"><h1><a><img src="img/temp/logo.png" ></a></h1>
+        <p></p>
+        <div class="msg-warn hide"><b></b>公共场所不建议自动登录，以防账号丢失</div>
+        <p><input type="text" name="email" value="" placeholder="邮箱" id="userName" onblur="checkUname();" ><span id="userNameSpan"></span></p>
+        <p><input type="password" name="passWord" value="" placeholder="密码" id="passWord" onblur="checkPwd();" style="border: 1px solid #dbdbdb;font-size: 20px;padding-left: 10px;"><span id="passWordSpan" ></span></p>
+        <p><input type="submit" name="" value="登  录"></p>
+        <p class="txt"><a href="/reg">免费注册</a><a href="/forget">忘记密码？</a></p>
+    </form>
+</div>
+</body>
+</html>
